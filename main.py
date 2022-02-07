@@ -15,6 +15,7 @@ async def ready():
 async def interaction_create(data):
     interaction = Interaction(client, data)
     if interaction.type == 2:
+        # 日本語翻訳
         if interaction.data["name"] == "japanese":
             m = interaction.data["resolved"]["messages"][interaction.data['target_id']]
             content = m["content"]
