@@ -43,7 +43,7 @@ class DiscordClientHttp:
                     data = await r.json()
                     raise ApiError(data["message"])
                 elif r.status == 429:
-                    if r.headers["X-RateLimit-Global"]:
+                    if r.headers.get("X-RateLimit-Global"):
                         raise ApiError("Rate limit")
                     else:
-                        await asyncio.sleep(r.headers["Retry-After"])
+                        await asyncio.sleep(int(r.headers["Retry-After"]))

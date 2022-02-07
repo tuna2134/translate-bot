@@ -2,6 +2,7 @@ from lib.api import Client
 from lib.types import Interaction
 from async_google_trans_new import AsyncTranslator
 from os import getenv
+import traceback
 
 client = Client()
 g = AsyncTranslator()
@@ -22,6 +23,8 @@ async def interaction_create(data):
             try:
                 result = await g.translate(content, "ja")
             except Exception as e:
+                with open("error.txt", "w") as f:
+                    f.write(traceback.format_exc())
                 result = f"エラーが発生しました\n{e}"
             await interaction.send(embed = {
                 "title": "translate",
