@@ -9,6 +9,9 @@ class Client:
         self.listens = {}
         self.request = self.http.request
 
+    async def create_command(self, data):
+        return await self.request("POST", f"/applications/{self.user['id']}/commands", json = data)
+
     def dispatch(self, name, *args, **kwargs):
         if name in self.listens:
             for coro in self.listens[name]:
